@@ -246,7 +246,6 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
         self.assertTrue(self.account200 in self.group2.compute_account_ids)
 
     def test_01_account_balance_computed(self):
-<<<<<<< HEAD
         # Change code of the P&L for not being automatically included
         # in group 1 balances
         earning_accs = self.env["account.account"].search(
@@ -261,8 +260,13 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
         )
         for acc in earning_accs:
             acc.code = "999" + acc.code
-=======
->>>>>>> [FIX] account_financial_report: Don't include unaffected account if accounts are filtered
+        # Change code of the P&L for not being automatically included
+        # in group 1 balances
+        earning_accs = self.env["account.account"].search(
+            [("user_type_id", "=", self.env.ref("account.data_unaffected_earnings").id)]
+        )
+        for acc in earning_accs:
+            acc.code = "999" + acc.code
         # Generate the general ledger line
         res_data = self._get_report_lines()
         trial_balance = res_data["trial_balance"]
